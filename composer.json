@@ -1,17 +1,17 @@
 {
-    "name": ":vendor_slug/:package_slug",
-    "description": ":package_description",
+    "name": "teguhpermadi/siakad-package",
+    "description": "siakad database schema for laravel",
     "keywords": [
-        ":vendor_name",
+        "teguhpermadi",
         "laravel",
-        ":package_slug"
+        "siakad-package"
     ],
-    "homepage": "https://github.com/:vendor_slug/:package_slug",
+    "homepage": "https://github.com/teguhpermadi/siakad-package",
     "license": "MIT",
     "authors": [
         {
-            "name": ":author_name",
-            "email": "author@domain.com",
+            "name": "teguhpermadi",
+            "email": "tguh.permadi@gmail.com",
             "role": "Developer"
         }
     ],
@@ -35,13 +35,13 @@
     },
     "autoload": {
         "psr-4": {
-            "VendorName\\Skeleton\\": "src",
-            "VendorName\\Skeleton\\Database\\Factories\\": "database/factories"
+            "Teguhpermadi\\SiakadPackage\\": "src",
+            "Teguhpermadi\\SiakadPackage\\Database\\Factories\\": "database/factories"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "VendorName\\Skeleton\\Tests\\": "tests"
+            "Teguhpermadi\\SiakadPackage\\Tests\\": "tests"
         }
     },
     "scripts": {
@@ -61,10 +61,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "VendorName\\Skeleton\\SkeletonServiceProvider"
+                "Teguhpermadi\\SiakadPackage\\SiakadPackageServiceProvider"
             ],
             "aliases": {
-                "Skeleton": "VendorName\\Skeleton\\Facades\\Skeleton"
+                "SiakadPackage": "Teguhpermadi\\SiakadPackage\\Facades\\SiakadPackage"
             }
         }
     },
