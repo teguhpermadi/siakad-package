@@ -1,0 +1,29 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up()
+    {
+        // Schema::create('siakad_package_table', function (Blueprint $table) {
+        //     $table->id();
+
+        //     // add fields
+
+        //     $table->timestamps();
+        // });
+        Schema::table('users', function (Blueprint $table) {
+            $table->after('password', function ($table) {
+                $table->string('username')->unique();
+                
+                $table->string('guard')->nullable();
+                $table->string('guardable_id')->nullable();
+                $table->string('guardable_type')->nullable();
+                $table->boolean('is_active')->nullable()->default(true);
+            });
+        });
+    }
+};

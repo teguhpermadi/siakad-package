@@ -17,9 +17,11 @@ class SiakadPackageServiceProvider extends PackageServiceProvider
          */
         $package
             ->name('siakad-package')
-            ->hasConfigFile()
-            ->hasViews()
-            ->hasMigration('create_siakad-package_table')
-            ->hasCommand(SiakadPackageCommand::class);
+                ->hasMigration('add_column_users_table')
+                ->hasMigration('create_school_table');
+            // ->hasConfigFile()
+            // ->hasViews()
+            // ->hasMigration('create_siakad-package_table')
+            // ->hasCommand(SiakadPackageCommand::class);
     }
 }
