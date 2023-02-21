@@ -12,10 +12,8 @@ class SiakadPackageCommand extends Command
     public $description = 'Copy factory files';
 
     public function handle(): int
-    {
-        $this->publishes([
-            __DIR__.'/../database/factories/' => database_path('factories')
-        ]);
+    {        
+        $this->comment('All done');
 
         return self::SUCCESS;
     }
