@@ -2,30 +2,27 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Database\Eloquent\Builder;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
-    /**
+     /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
         'name',
+        'username',
         'email',
         'password',
-        'username',
-		'guard',
-		'guardable_id',
-		'guardable_type',
-		'is_active',
     ];
 
     /**
@@ -36,7 +33,20 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'created_at',
+        'updated_at',
     ];
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        // Menggunakan event 'creating' untuk menambahkan kode unik ke username sebelum disimpan
+        static::creating(function ($user) {
+            $user->username = $user->generateUniqueUsername($user->username);
+        });
+    }
+
 
     /**
      * The attributes that should be cast.
@@ -45,24 +55,31 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
-		'is_active' => 'bool'
+        'password' => 'hashed',
     ];
 
-    // fungsi ini berguna untuk relasi factory
-    public function student()
+    public function userable()
     {
-        return $this->hasOne(User::class);
+        return $this->hasOne(Userable::class);
     }
 
-    // fungsi ini berguna untuk relasi factory
-    public function teacher()
+    public function scopeTeacher(Builder $query)
     {
-        return $this->hasOne(User::class);
+        $teacher = Userable::where('userable_type', 'App\Models\Teacher')->pluck('user_id');
+        return $query->whereIn('id', $teacher);
     }
 
-    // fungsi ini berguna untuk relasi ORM
-    public function guardable()
+    public function scopeStudent(Builder $query)
     {
-        return $this->morphTo();
+        $student = Userable::where('userable_type', 'App\Models\Student')->pluck('user_id');
+        return $query->whereIn('id', $student);
+    }
+
+    protected function generateUniqueUsername($username)
+    {
+        $newUsername = str_replace(' ', '', $username);
+        $uniqueCode = '_' . str_pad(random_int(0, 99), 2, '0', STR_PAD_LEFT);
+        // Generate a unique code with 2 digits using random_int() and str_pad()
+        return $newUsername . $uniqueCode;
     }
 }

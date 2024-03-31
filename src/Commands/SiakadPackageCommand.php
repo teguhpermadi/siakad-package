@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Artisan;
 
 class SiakadPackageCommand extends Command
 {
-    public $signature = 'siakad:factory';
+    public $signature = 'siakad:migration';
 
-    public $description = 'Copy factory files';
+    public $description = 'Copy migration files';
 
     public function handle(): int
     {        

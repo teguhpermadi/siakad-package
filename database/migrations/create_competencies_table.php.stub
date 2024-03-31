@@ -14,9 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('competencies', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('teacher_subject_id')->constrained('teacher_subject')->onDelete('cascade');;
-            $table->text('description');
+           $table->id();
+            $table->foreignId('teacher_subject_id')->references('id')->on('teacher_subjects')->cascadeOnDelete();
+            $table->string('code')->nullable();
+            $table->string('description');
+            $table->string('code_skill')->nullable();
+            $table->string('description_skill')->nullable();
+            $table->string('passing_grade')->default(0);
             $table->timestamps();
         });
     }

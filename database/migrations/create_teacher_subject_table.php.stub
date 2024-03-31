@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('teacher_subject', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('academic_year_id')->constrained('academic_years')->onDelete('cascade');
-            $table->foreignId('teacher_id')->constrained('teachers')->onDelete('cascade');
-            $table->foreignId('subject_id')->constrained('subjects')->onDelete('cascade');
-            $table->string('score_min')->nullable();
-            $table->timestamps();
+            $table->foreignId('academic_year_id')->references('id')->on('academic_years')->cascadeOnDelete();
+            $table->foreignId('grade_id')->references('id')->on('grades')->cascadeOnDelete();
+            $table->foreignId('teacher_id')->references('id')->on('teachers')->cascadeOnDelete();
+            $table->foreignId('subject_id')->references('id')->on('subjects')->cascadeOnDelete();
+            $table->unique(['academic_year_id', 'grade_id', 'teacher_id', 'subject_id'], 'teacher_subject_unique');
         });
     }
 

@@ -9,18 +9,16 @@ class School extends Model
 {
     use HasFactory;
 
-    protected $table = 'school';
-
     protected $fillable = [
         'name',
         'address',
-        'village_id',
-        'postal_code',
-        'npsn',
         'nsm',
+        'npsn',
         'email',
         'phone',
+        'website',
         'logo',
-        'photo',
+        'village_id',
+        'foundation',
     ];
 }
